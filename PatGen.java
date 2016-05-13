@@ -5,10 +5,10 @@ class PatGen {
 	/* Power determines how many pixels large the .png will be. */
 	static int power = 9;
 	static int resolution =(int)(Math.pow(2, power+2));
-	static int offsetX = (int)(resolution / 2);
-	static int offsetY = (int)(resolution / 2);
+	static int offsetX = (int)(resolution / 4);
+	static int offsetY = (int)(resolution / 4);
 	
-	static double scale = 1.0 / Math.pow(2, power-1);
+	static double scale = 1.5 / Math.pow(2, power+1);
 	
 	static double[][] red = new double[resolution][resolution];
 	static double[][] green = new double[resolution][resolution];
@@ -29,26 +29,30 @@ class PatGen {
 		rootBlue = prevB = new Equation(rand);		
 
 
-		int numIts = rand.nextInt(6);
-		for ( int i = 0 ; i < numIts ; i++ ) {
-			prevR.addChild(new Equation(rand));
-			prevR = prevR.getChild();
-		}
-		numIts = rand.nextInt(6);
-		for ( int i = 0 ; i < numIts ; i++ ) {
-			prevG.addChild(new Equation(rand));
-			prevG = prevG.getChild();
-		}
-		numIts = rand.nextInt(6);
-		for ( int i = 0 ; i < numIts ; i++ ) {
-			prevB.addChild(new Equation(rand));
-			prevB = prevB.getChild();
+		int numItsMax = 6;
+		int numItsR = rand.nextInt(numItsMax);
+		int numItsG = rand.nextInt(numItsMax);
+		int numItsB = rand.nextInt(numItsMax);
+		
+		for ( int i = 0 ; i < numItsMax ; ++i ) {
+			if ( i < numItsR ) {
+				prevR.addChild(new Equation(rand));
+				prevR = prevR.getChild();
+			}
+			if ( i < numItsG ) {
+				prevG.addChild(new Equation(rand));
+				prevG = prevG.getChild();
+			}
+			if ( i < numItsB ) {
+				prevB.addChild(new Equation(rand));
+				prevB = prevB.getChild();
+			}
 		}
 
-		for ( int i = 0 ; i < resolution ; i++ ) {
-			for ( int j = 0 ; j < resolution ; j++ ) {
-				double ir = (i - offsetX) * scale;
-				double jr = (j - offsetY) * scale;
+		for ( int i = 0 ; i < resolution ; ++i ) {
+			for ( int j = 0 ; j < resolution ; ++j ) {
+				double ir = (i + offsetX) * scale;
+				double jr = (j + offsetY) * scale;
 				red[i][j] = rootRed.constructEquation(ir, jr, jr*ir);
 				green[i][j] = rootGreen.constructEquation(ir, jr, jr*ir);
 				blue[i][j] = rootBlue.constructEquation(ir, jr, ir*jr);

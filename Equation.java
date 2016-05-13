@@ -9,7 +9,7 @@ class Equation {
 		COS, SIN
 	}
 	public enum Vars {
-		VX, VY, VXY, VXOY, VYOX, NONE
+		VX, VY, VXY, VXOY, VYOX, VPI, NONE
 	}
 	public long seed;
 	
@@ -71,6 +71,9 @@ class Equation {
 				if ( x == 0.0 )
 					x = 0.001;
 				mulVar = y / x;
+				break;
+			case VPI:
+				mulVar = Math.PI;
 				break;
 			case NONE:
 				mulVar = 1.0;
