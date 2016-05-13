@@ -9,7 +9,7 @@ class Equation {
 		COS, SIN
 	}
 	public enum Vars {
-		VX, VY, VXY, NONE
+		VX, VY, VXY, VXOY, VYOX, NONE
 	}
 	public long seed;
 	
@@ -61,6 +61,17 @@ class Equation {
 				break;
 			case VXY:
 				mulVar = x * y;
+				break;
+			case VXOY:
+				if ( y == 0.0 )
+					y = 0.001;
+				mulVar = x / y;
+				break;
+			case VYOX:
+				if ( x == 0.0 )
+					x = 0.001;
+				mulVar = y / x;
+				break;
 			case NONE:
 				mulVar = 1.0;
 				break;
@@ -71,7 +82,7 @@ class Equation {
 				mulFact = mulVar;
 				break;
 			case DIV:
-				mulFact = mulVar;
+				mulFact = 1.0 / mulVar;
 				break;
 			default: return error+1;
 		}
