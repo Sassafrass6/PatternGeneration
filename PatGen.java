@@ -3,12 +3,12 @@ import java.util.*;
 class PatGen {
 	
 	/* Power determines how many pixels large the .png will be. */
-	static int power = 9;
-	static int resolution =(int)(Math.pow(2, power+2));
-	static int offsetX = (int)(resolution / 4);
-	static int offsetY = (int)(resolution / 4);
+	static int power = 10;
+	static int resolution =(int)(Math.pow(2, power+1));
+	static int offsetX = 0; //(int)(-resolution / 2);
+	static int offsetY = 0; //(int)(-resolution / 2);
 	
-	static double scale = 1.5 / Math.pow(2, power+1);
+	static double scale = 1.7 / Math.pow(2, power);
 	
 	static double[][] red = new double[resolution][resolution];
 	static double[][] green = new double[resolution][resolution];
@@ -53,7 +53,7 @@ class PatGen {
 			for ( int j = 0 ; j < resolution ; ++j ) {
 				double ir = (i + offsetX) * scale;
 				double jr = (j + offsetY) * scale;
-				red[i][j] = rootRed.constructEquation(ir, jr, jr*ir);
+				red[i][j] = rootRed.constructEquation(ir, jr, jr*ir*jr);
 				green[i][j] = rootGreen.constructEquation(ir, jr, jr*ir);
 				blue[i][j] = rootBlue.constructEquation(ir, jr, ir*jr);
 			}
