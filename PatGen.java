@@ -16,7 +16,7 @@ class PatGen {
 	//static double[][] grayScale = new double[(int)resolution][(int)resolution];
 	
 	protected static void printEquation ( Equation root, String arg ) {
-		System.out.println(root.printNext(arg));
+		System.out.println(root.printNext());
 	}
 	
 	public static void main ( String[] args ) {
@@ -53,12 +53,12 @@ class PatGen {
 			for ( int j = 0 ; j < resolution ; ++j ) {
 				double ir = (i + offsetX) * scale;
 				double jr = (j + offsetY) * scale;
-				red[i][j] = rootRed.constructEquation(ir, jr, jr*ir*jr);
-				green[i][j] = rootGreen.constructEquation(ir, jr, jr*ir);
-				blue[i][j] = rootBlue.constructEquation(ir, jr, ir*jr);
+				red[i][j] = rootRed.constructEquation(ir, jr);
+				green[i][j] = rootGreen.constructEquation(ir, jr);
+				blue[i][j] = rootBlue.constructEquation(ir, jr);
 			}
 		}
-		
+		printEquation(rootRed, "x");
 		ImageWriter.createImage(red, green, blue);
 	}
 }

@@ -19,6 +19,8 @@ class Equation {
 	private Equation child;
 	private Random rnd;
 	private String arg;
+	private Vars deepArgStr;
+	private int deepArg;
 	private Ops op;
 	private Trig trig;
 	private Vars var;
@@ -36,6 +38,8 @@ class Equation {
 		op = ops[getRandomIndex(rnd, ops.length)];
 		trig = trigs[getRandomIndex(rnd, trigs.length)];
 		var = vars[getRandomIndex(rnd, vars.length)];
+		deepArg = getRandomIndex(rnd, 3);
+		deepArgStr = vars[deepArg];
 	}
 	
 	protected int getRandomIndex ( Random rnd, int len ) {
@@ -45,7 +49,7 @@ class Equation {
 		return ret;
 	}
 	
-	public double constructEquation ( double x, double y, double deepArg ) {
+	public double constructEquation ( double x, double y ) {
 		int toReturn;
 		double error = 0.0;
 		boolean endOfLineage = false;
@@ -91,16 +95,38 @@ class Equation {
 		}
 		switch ( trig ) {
 			case SIN:
-				if ( endOfLineage )
-					mulTrig = Math.sin(deepArg);
+				if ( endOfLineage ) {
+					switch ( deepArg ) {
+						case 0:
+							mulTrig = Math.sin(x);
+							break;
+						case 1:
+							mulTrig = Math.sin(y);
+							break;
+						default:
+							mulTrig = Math.sin(x*y);
+							break;
+					}
+				}
 				else
-					mulTrig = Math.sin(child.constructEquation(x, y, deepArg));
+					mulTrig = Math.sin(child.constructEquation(x, y));
 				break;
 			case COS:
-				if ( endOfLineage )
-					mulTrig = Math.cos(deepArg);
+				if ( endOfLineage ) {
+					switch ( deepArg ) {
+						case 0:
+							mulTrig = Math.sin(x);
+							break;
+						case 1:
+							mulTrig = Math.sin(y);
+							break;
+						default:
+							mulTrig = Math.sin(x*y);
+							break;
+					}
+				}
 				else
-					mulTrig = Math.cos(child.constructEquation(x, y, deepArg));
+					mulTrig = Math.cos(child.constructEquation(x, y));
 				break;
 			default: return error+2;
 		}
@@ -115,10 +141,10 @@ class Equation {
 		child = ch;
 	}
 	
-	public String printNext ( String deepArg ) {
+	public String printNext ( ) {
 		if ( child == null ) 
-			return "("+var+" "+op+" "+trig+"("+deepArg+")"+")";
+			return "("+var+" "+op+" "+trig+"("+deepArgStr+")"+")";
 		else
-			return "("+var+" "+op+" "+trig+"("+child.printNext(deepArg)+")"+")";
+			return "("+var+" "+op+" "+trig+"("+child.printNext()+")"+")";
 	}
 }
