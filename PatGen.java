@@ -30,20 +30,20 @@ class PatGen {
 
 
 		int numItsMax = 6;
-		int numItsR = rand.nextInt(numItsMax);
-		int numItsG = rand.nextInt(numItsMax);
-		int numItsB = rand.nextInt(numItsMax);
+		int numItsR = numItsMax;//rand.nextInt(numItsMax);
+		int numItsG = numItsMax;//rand.nextInt(numItsMax);
+		int numItsB = numItsMax;//rand.nextInt(numItsMax);
 		
 		for ( int i = 0 ; i < numItsMax ; ++i ) {
-			if ( i < numItsR ) {
+			if ( i < numItsR && rand.nextInt(10) > rand.nextInt(5) ) {
 				prevR.addChild(new Equation(rand));
 				prevR = prevR.getChild();
 			}
-			if ( i < numItsG ) {
+			if ( i < numItsG && rand.nextInt(10) > rand.nextInt(5) ) {
 				prevG.addChild(new Equation(rand));
 				prevG = prevG.getChild();
 			}
-			if ( i < numItsB ) {
+			if ( i < numItsB && rand.nextInt(10) > rand.nextInt(5) ) {
 				prevB.addChild(new Equation(rand));
 				prevB = prevB.getChild();
 			}
@@ -58,7 +58,12 @@ class PatGen {
 				blue[i][j] = rootBlue.constructEquation(ir, jr);
 			}
 		}
+		System.out.print("R(x,y) = ");
 		printEquation(rootRed, "x");
+		System.out.print("G(x,y) = ");
+		printEquation(rootGreen, "x");
+		System.out.print("B(x,y) = ");
+		printEquation(rootBlue, "x");
 		ImageWriter.createImage(red, green, blue);
 	}
 }
